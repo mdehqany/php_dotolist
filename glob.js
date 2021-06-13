@@ -52,12 +52,14 @@ function load_tasks(){
     $("#in_queue").html("");
     $("#tasks").html("")
     $.post("ajax.php?task=tasks",{},function(res){
-        res = JSON.parse(res);
-        for(i in res['queue']){
-            $("#in_queue").append('<div class="table p'+res['queue'][i]['pri']+'" data-hash="'+res['queue'][i]['hash']+'"><div class="title">'+res['queue'][i]['title']+'</div> <div class="complete" data-caption="Done">&#9989;</div></div>');
-        }
-        for(j in res['tasks']){
-            $("#tasks").append('<div class="table p'+res['tasks'][j]['pri']+'" data-hash="'+res['tasks'][j]['hash']+'"><div class="title">'+res['tasks'][j]['title']+'</div> <div class="delete" data-caption="Delete">&#9940;</div></div>');
+        if(res != ""){
+            res = JSON.parse(res);
+            for(i in res['queue']){
+                $("#in_queue").append('<div class="table p'+res['queue'][i]['pri']+'" data-hash="'+res['queue'][i]['hash']+'"><div class="title">'+res['queue'][i]['title']+'</div> <div class="complete" data-caption="Done">&#9989;</div></div>');
+            }
+            for(j in res['tasks']){
+                $("#tasks").append('<div class="table p'+res['tasks'][j]['pri']+'" data-hash="'+res['tasks'][j]['hash']+'"><div class="title">'+res['tasks'][j]['title']+'</div> <div class="delete" data-caption="Delete">&#9940;</div></div>');
+            }
         }
         $(".loading").hide();
     })
